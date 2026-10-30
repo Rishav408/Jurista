@@ -1,17 +1,17 @@
 #!/usr/bin/env python3
 """
-Test script to verify NyayaAI identity and responses.
+Test script to verify Jurista identity and responses.
 """
 
 import requests
 import json
 
-def test_nyaya_identity():
-    """Test if NyayaAI responds with correct identity."""
+def test_jurista_identity():
+    """Test if Jurista responds with correct identity."""
     
     base_url = "http://localhost:5000"
     
-    print("🧪 Testing NyayaAI Identity")
+    print("🧪 Testing Jurista Identity")
     print("=" * 50)
     
     # Test health endpoint first
@@ -26,7 +26,7 @@ def test_nyaya_identity():
         print(f"❌ Cannot connect to backend: {e}")
         return
     
-    # Test questions to verify NyayaAI identity
+    # Test questions to verify Jurista identity
     test_questions = [
         "Who are you?",
         "What is your purpose?",
@@ -53,8 +53,8 @@ def test_nyaya_identity():
                     print(f"✅ Response received:")
                     print(f"📝 {answer[:200]}...")
                     
-                    # Check if response contains NyayaAI identity markers
-                    if "NyayaAI" in answer or "Indian Legal" in answer or "legal" in answer.lower():
+                    # Check if response contains Jurista identity markers
+                    if "Jurista" in answer or "Indian Legal" in answer or "legal" in answer.lower():
                         print("✅ Identity markers found in response")
                     else:
                         print("⚠️ No clear identity markers found")
@@ -67,7 +67,7 @@ def test_nyaya_identity():
             print(f"❌ Request failed: {e}")
     
     print("\n" + "=" * 50)
-    print("🏁 NyayaAI Identity Test Complete")
+    print("🏁 Jurista Identity Test Complete")
 
 if __name__ == "__main__":
-    test_nyaya_identity()
+    test_jurista_identity()

@@ -28,7 +28,7 @@ class Config:
     # LangChain configuration
     LANGCHAIN_TRACING_V2 = os.environ.get('LANGCHAIN_TRACING_V2', 'false').lower() == 'true'
     LANGCHAIN_API_KEY = os.environ.get('LANGCHAIN_API_KEY')
-    LANGCHAIN_PROJECT = os.environ.get('LANGCHAIN_PROJECT', 'nayay-backend')
+    LANGCHAIN_PROJECT = os.environ.get('LANGCHAIN_PROJECT', 'jurista-backend')
     
     # Gemini model configuration
     GEMINI_MODEL = os.environ.get('GEMINI_MODEL', 'gemini-1.5-flash')

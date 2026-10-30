@@ -1,4 +1,4 @@
-# Nayay Backend - LangChain + Gemini API Integration
+# Jurista Backend - LangChain + Gemini API Integration
 
 A modular, scalable backend system that integrates LangChain with Google Gemini API and online search capabilities for AI-powered applications.
 

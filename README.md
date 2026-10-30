@@ -1,6 +1,6 @@
-# NyayaAI
+# Jurista
 
-NyayaAI is an AI-powered Indian legal assistant with a static frontend and a Flask backend. It is designed to help users ask legal questions, keep local conversation history, upload documents for context-aware answers, and optionally use web search to improve responses when current information is needed.
+Jurista is an AI-powered Indian legal assistant with a static frontend and a Flask backend. It is designed to help users ask legal questions, keep local conversation history, upload documents for context-aware answers, and optionally use web search to improve responses when current information is needed.
 
 ## Overview
 
@@ -110,7 +110,7 @@ Important endpoints:
 ## Folder structure
 
 ```text
-NayayAI/
+Jurista/
 ├─ backend/
 │  ├─ .env
 │  ├─ backend.log
@@ -234,7 +234,7 @@ The frontend now uses relative links and relative asset paths, so serving direct
 ### `backend/gemini_chain.py`
 
 - Maintains per-session conversation memory.
-- Builds the NyayaAI legal-assistant prompt.
+- Builds the Jurista legal-assistant prompt.
 - Supports normal chat and context chat.
 
 ### `backend/intelligent_search.py`

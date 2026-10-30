@@ -1,5 +1,5 @@
 /**
- * NyayaAI Frontend - Main JavaScript
+ * Jurista Frontend - Main JavaScript
  * 
  * This file handles all frontend functionality including:
  * - Theme management
@@ -269,9 +269,23 @@ class APIClient {
 
 class ConversationManager {
   constructor() {
-    this.storageKey = 'nyaya_threads';
-    this.activeThreadKey = 'nyaya_active_thread';
+    this.storageKey = 'jurista_threads';
+    this.activeThreadKey = 'jurista_active_thread';
+    this.migrateLegacyStorage();
     this.init();
+  }
+
+  migrateLegacyStorage() {
+    try {
+      if (!localStorage.getItem(this.storageKey) && localStorage.getItem('nyaya_threads')) {
+        localStorage.setItem(this.storageKey, localStorage.getItem('nyaya_threads'));
+      }
+      if (!localStorage.getItem(this.activeThreadKey) && localStorage.getItem('nyaya_active_thread')) {
+        localStorage.setItem(this.activeThreadKey, localStorage.getItem('nyaya_active_thread'));
+      }
+    } catch (e) {
+      console.warn('Storage migration notice:', e);
+    }
   }
 
   init() {
@@ -307,6 +321,7 @@ class ConversationManager {
     localStorage.setItem(this.activeThreadKey, id);
     // Notify listeners (e.g., ChatInterface) that the active thread changed
     try {
+      window.dispatchEvent(new CustomEvent('jurista:active-thread-changed', { detail: { id } }));
       window.dispatchEvent(new CustomEvent('nyaya:active-thread-changed', { detail: { id } }));
     } catch (e) {
       console.warn('Failed to dispatch active-thread-changed event', e);
@@ -502,7 +517,7 @@ class ChatInterface {
     this.renderMessages();
     this.checkBackendConnection();
     // Re-render messages when active thread changes from sidebar clicks
-    window.addEventListener('nyaya:active-thread-changed', () => {
+    window.addEventListener('jurista:active-thread-changed', () => {
       this.renderMessages();
       this.clearError();
     });
@@ -637,10 +652,10 @@ class ChatInterface {
     }
 
     // Listen for document attach/remove events from FileUploadHandler
-    window.addEventListener('nyaya:doc-attached', (e) => {
+    window.addEventListener('jurista:doc-attached', (e) => {
       this.onDocumentAttached(e.detail);
     });
-    window.addEventListener('nyaya:doc-removed', () => {
+    window.addEventListener('jurista:doc-removed', () => {
       this.onDocumentRemoved();
     });
   }
@@ -789,7 +804,7 @@ class ChatInterface {
         ? 'text-slate-500 dark:text-slate-400' 
         : 'text-royal dark:text-blue-300'
     }`;
-    label.textContent = role === 'user' ? 'You' : 'NyayaAI';
+    label.textContent = role === 'user' ? 'You' : 'Jurista';
 
     // Message body
     const body = document.createElement('div');
@@ -885,7 +900,7 @@ class ChatInterface {
     loadingElement.innerHTML = `
       <div class="w-8 h-8 rounded-full bg-gradient-to-br from-royal to-blue-800 text-white grid place-items-center text-sm font-semibold">AI</div>
       <div class="flex-1">
-        <div class="text-xs font-medium text-royal dark:text-blue-300 mb-1">NyayaAI</div>
+        <div class="text-xs font-medium text-royal dark:text-blue-300 mb-1">Jurista</div>
         <div class="flex items-center gap-2 text-slate-500">
           <span class="h-2 w-2 rounded-full bg-slate-400 animate-bounce"></span>
           <span class="h-2 w-2 rounded-full bg-slate-400 animate-bounce" style="animation-delay: 120ms;"></span>
@@ -939,7 +954,7 @@ class ChatInterface {
       chatContainer.innerHTML = `
         <div class="text-center py-8">
           <div class="text-4xl mb-4">⚖️</div>
-          <div class="text-lg font-medium text-slate-700 dark:text-slate-300 mb-2">Welcome to NyayaAI</div>
+          <div class="text-lg font-medium text-slate-700 dark:text-slate-300 mb-2">Welcome to Jurista</div>
           <div class="text-sm text-slate-500 dark:text-slate-400">
             Start a conversation by typing your legal question below.
           </div>
@@ -1169,7 +1184,7 @@ class FileUploadHandler {
       const api = new APIClient();
       const result = await api.uploadDocument(file);
       // Notify chat interface
-      window.dispatchEvent(new CustomEvent('nyaya:doc-attached', { detail: { filename: result.filename, text: result.text } }));
+      window.dispatchEvent(new CustomEvent('jurista:doc-attached', { detail: { filename: result.filename, text: result.text } }));
       this.showUploadStatus('Document added. Web search disabled while attached.', 'success');
       this.showUploadedFile(result.filename);
     } catch (error) {
@@ -1200,7 +1215,7 @@ class FileUploadHandler {
     if (uploadedFile) uploadedFile.classList.add('hidden');
     if (uploadStatus) uploadStatus.classList.add('hidden');
     // Notify chat interface
-    window.dispatchEvent(new CustomEvent('nyaya:doc-removed'));
+    window.dispatchEvent(new CustomEvent('jurista:doc-removed'));
   }
 
   showUploadStatus(message, type) {
@@ -1274,5 +1289,5 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  console.log('✅ NyayaAI Frontend initialized successfully');
+  console.log('✅ Jurista Frontend initialized successfully');
 });

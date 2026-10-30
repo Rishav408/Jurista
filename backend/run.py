@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Simple startup script for the Nayay backend.
+Simple startup script for the Jurista backend.
 
 This script provides an easy way to start the backend server with
 proper environment setup and error handling.
@@ -39,7 +39,7 @@ def setup_environment():
 
 def main():
     """Main entry point for the startup script."""
-    print("🚀 Starting Nayay Backend Server...")
+    print("🚀 Starting Jurista Backend Server...")
     print("=" * 50)
     
     try:

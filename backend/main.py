@@ -26,7 +26,7 @@ def create_app():
     
     # Enable CORS for frontend integration.
     # In production, set the ALLOWED_ORIGINS env var on Render to your Firebase URL,
-    # e.g. ALLOWED_ORIGINS=https://nyayaai-abc12.web.app
+    # e.g. ALLOWED_ORIGINS=https://jurista.web.app
     # Locally it defaults to "*" so development is unaffected.
     raw_origins = os.environ.get('ALLOWED_ORIGINS', '*')
     allowed_origins = [o.strip() for o in raw_origins.split(',')] if raw_origins != '*' else ['*']

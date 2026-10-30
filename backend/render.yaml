@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: nyayaai-backend
+    name: jurista-backend
     runtime: python
     rootDir: backend
     buildCommand: pip install -r requirements.txt
@@ -27,4 +27,4 @@ services:
       # - key: SECRET_KEY
       #   value: your_secret_here
       - key: ALLOWED_ORIGINS
-        value: https://nyayaai408.web.app,https://nyayaai408.firebaseapp.com
+        value: https://nyayaai408.web.app,https://nyayaai408.firebaseapp.com,https://jurista.web.app

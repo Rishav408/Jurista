@@ -91,7 +91,7 @@ def test_search_endpoint(base_url):
 
 def main():
     """Run all tests."""
-    print("🧪 Nayay Backend Test Suite")
+    print("🧪 Jurista Backend Test Suite")
     print("=" * 50)
     
     # Check if server is running

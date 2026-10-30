@@ -1,5 +1,5 @@
 """
-Intelligent search integration for NyayaAI.
+Intelligent search integration for Jurista.
 
 This module provides intelligent decision-making for when to use web search
 versus relying on the LLM's built-in knowledge for answering legal questions.
@@ -83,7 +83,7 @@ class IntelligentSearchManager:
             # Create synthesis prompt template
             synthesis_template = PromptTemplate(
                 input_variables=["query", "llm_response", "search_results"],
-                template="""You are NyayaAI, an advanced Indian Legal AI Assistant. Your task is to enhance your initial response with current web search information to provide the most comprehensive and up-to-date legal guidance.
+                template="""You are Jurista, an advanced Indian Legal AI Assistant. Your task is to enhance your initial response with current web search information to provide the most comprehensive and up-to-date legal guidance.
 
 **Original Question:** {query}
 
