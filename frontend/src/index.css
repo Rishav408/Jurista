@@ -1,0 +1,264 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   Jurista Design Tokens — ported from the legacy static theme,
+   extended with navy contrast, success, and richer dark surface.
+   ============================================================ */
+:root {
+  color-scheme: light;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f9f9f8;
+  --bg-tertiary: #f0eeeb;
+  --text-primary: #1a1a19;
+  --text-secondary: #5c5c5a;
+  --text-muted: #8a8a85;
+  --accent: #d97706;
+  --accent-hover: #b45309;
+  --accent-subtle: #fef3c7;
+  --navy: #1e3a5f;
+  --success: #059669;
+  --error: #dc2626;
+  --error-subtle: #fee2e2;
+  --border: #e5e3de;
+  --border-subtle: #f0eeeb;
+  --surface-user: #f0eeeb;
+  --surface-ai: #ffffff;
+  --sidebar: #f9f9f8;
+  --glass: rgba(255, 255, 255, 0.6);
+  --glass-border: rgba(0, 0, 0, 0.06);
+  --shadow: rgba(0, 0, 0, 0.06);
+  /* RGB triplets backing the Tailwind static tokens (see tailwind.config.js)
+     so utilities like bg-accent/10 keep working in both themes. */
+  --accent-rgb: 217 119 6;
+  --accent-hover-rgb: 180 83 9;
+  --accent-subtle-rgb: 254 243 199;
+  --navy-rgb: 30 58 95;
+  --success-rgb: 5 150 105;
+}
+
+.dark {
+  color-scheme: dark;
+  --bg-primary: #0f0f0e;
+  --bg-secondary: #191817;
+  --bg-tertiary: #222120;
+  --text-primary: #e8e6e1;
+  --text-secondary: #9b9892;
+  --text-muted: #6b6a66;
+  --accent: #d97706;
+  --accent-hover: #f59e0b;
+  --accent-subtle: #292217;
+  --navy: #8db4dd;
+  --success: #34d399;
+  --error: #ef4444;
+  --error-subtle: #451a1a;
+  --border: #2a2926;
+  --border-subtle: #222120;
+  --surface-user: #222120;
+  --surface-ai: #191817;
+  --sidebar: #191817;
+  --glass: rgba(255, 255, 255, 0.04);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --shadow: rgba(0, 0, 0, 0.4);
+  /* Dark-mode RGB triplets (accent-hover/subtle, navy and success lighten). */
+  --accent-rgb: 217 119 6;
+  --accent-hover-rgb: 245 158 11;
+  --accent-subtle-rgb: 41 34 23;
+  --navy-rgb: 141 180 221;
+  --success-rgb: 52 211 153;
+}
+
+/* Hero mesh gradient re-tuned for dark surfaces: brighter amber + moonlit navy. */
+.dark .bg-mesh-hero {
+  background-image: radial-gradient(
+      ellipse 60% 50% at 70% 10%,
+      rgba(217, 119, 6, 0.22),
+      transparent
+    ),
+    radial-gradient(ellipse 40% 40% at 15% 40%, rgba(245, 158, 11, 0.12), transparent),
+    radial-gradient(ellipse 50% 40% at 80% 80%, rgba(141, 180, 221, 0.12), transparent);
+}
+
+/* ============================================================
+   Base
+   ============================================================ */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-[var(--bg-primary)] text-[var(--text-primary)] font-sans antialiased;
+    line-height: 1.6;
+  }
+
+  ::selection {
+    @apply bg-accent/25;
+  }
+
+  /* Refined focus rings across the app */
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+}
+
+/* ============================================================
+   Component classes
+   ============================================================ */
+@layer components {
+  /* Semi-transparent glass cards (premium feel) */
+  .glass {
+    background: var(--glass);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid var(--glass-border);
+  }
+
+  .glass-strong {
+    background: var(--glass);
+    backdrop-filter: blur(24px) saturate(140%);
+    -webkit-backdrop-filter: blur(24px) saturate(140%);
+    border: 1px solid var(--glass-border);
+  }
+
+  /* Small uppercase label (13px, tracking-wide) */
+  .label-caps {
+    @apply text-[13px] font-medium uppercase tracking-widest;
+    color: var(--accent);
+  }
+
+  /* Grain texture overlay for hero sections */
+  .grain::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.35;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  }
+
+  /* Chat scrollbars: slim and theme-aware */
+  .scrollbar-slim {
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+  }
+  .scrollbar-slim::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  .scrollbar-slim::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 9999px;
+  }
+  .scrollbar-slim::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  /* Markdown body inside AI messages */
+  .markdown-body {
+    @apply text-[15px] leading-relaxed;
+  }
+  .markdown-body p {
+    @apply my-2 first:mt-0 last:mb-0;
+  }
+  .markdown-body strong {
+    @apply font-semibold text-[var(--text-primary)];
+  }
+  .markdown-body em {
+    @apply italic;
+  }
+  .markdown-body ul {
+    @apply my-2 list-disc space-y-1 pl-5;
+  }
+  .markdown-body ol {
+    @apply my-2 list-decimal space-y-1 pl-5;
+  }
+  .markdown-body h1,
+  .markdown-body h2,
+  .markdown-body h3 {
+    @apply mt-4 mb-2 font-semibold text-[var(--text-primary)];
+  }
+  .markdown-body h1 { @apply text-lg; }
+  .markdown-body h2 { @apply text-base; }
+  .markdown-body h3 { @apply text-[15px]; }
+  .markdown-body code {
+    @apply rounded bg-[var(--bg-tertiary)] px-1.5 py-0.5 text-[13px];
+  }
+  .markdown-body pre {
+    @apply my-2 overflow-x-auto rounded-lg border border-[var(--border)] bg-[var(--bg-tertiary)] p-3;
+  }
+  .markdown-body pre code {
+    @apply bg-transparent p-0 text-[13px];
+  }
+  .markdown-body blockquote {
+    @apply my-2 border-l-2 border-accent/50 pl-3 italic text-[var(--text-secondary)];
+  }
+  .markdown-body table {
+    @apply my-2 w-full text-sm;
+  }
+  .markdown-body th,
+  .markdown-body td {
+    @apply border border-[var(--border)] px-2 py-1 text-left;
+  }
+  .markdown-body th {
+    @apply bg-[var(--bg-tertiary)] font-semibold;
+  }
+  .markdown-body hr {
+    @apply my-3 border-[var(--border)];
+  }
+  .markdown-body a {
+    @apply text-accent underline decoration-accent/40 underline-offset-2 hover:decoration-accent;
+  }
+}
+
+/* ============================================================
+   Utilities
+   ============================================================ */
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  /* Staggered word reveal (hero headline) */
+  .word-reveal > span {
+    display: inline-block;
+    opacity: 0;
+    animation: fade-in-word 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+}
+
+@keyframes fade-in-word {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .word-reveal > span {
+    animation: none;
+    opacity: 1;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

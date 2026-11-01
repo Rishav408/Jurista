@@ -43,6 +43,23 @@ dist/
 .eggs/
 pip-wheel-metadata/
 
+# Legacy static site — kept locally, excluded from the repo
+frontend-old/
+
+# Node / frontend
+node_modules/
+frontend/.vite/
+npm-debug.log*
+yarn-error.log*
+yarn-debug.log*
+pnpm-debug.log*
+.eslintcache
+
+# Local-only env overrides (Vite convention)
+.env.*
+!.env.example
+*.local
+
 # Editors / IDE
 .vscode/
 .idea/
